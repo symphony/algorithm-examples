@@ -4,11 +4,11 @@ import AirportCodeValidator from './AirportCodeValidator';
 // types
 type AirportCode = string;
 
-const validateData = (validator: typeof AirportCodeValidator, data: string[]): never | void => {
+export const validateData = (validator: typeof AirportCodeValidator, data: string[]): never | void => {
   const v = new validator;
 
   const found = (data.find((s: string) => !v.isAcceptable(s)));
-  if (found) throw new Error('Not a valid area code');
+  if (found) throw new Error(String(found) + ' is not a valid area code');
   console.log('All codes valid');
 };
 
