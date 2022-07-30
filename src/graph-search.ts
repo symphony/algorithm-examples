@@ -1,12 +1,11 @@
 import _ from 'lodash';
-
-import airportCodes from '../fixtures/airport-codes.json';
 import AirportCodeValidator from './AirportCodeValidator';
+import airportCodes from '../fixtures/airport-codes.json';
 
 // types
 type AirportCode = string;
 
-export const validateData = (Validator: typeof AirportCodeValidator, data: string[]): never | void => {
+export const validateData = (Validator: typeof AirportCodeValidator, data: string[]): void => {
   const v = new Validator;
 
   const found = (data.find((s: string) => !v.isAcceptable(s)));
