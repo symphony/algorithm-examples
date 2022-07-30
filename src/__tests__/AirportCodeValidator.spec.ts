@@ -2,9 +2,12 @@ import { validateData } from "src/graph-search";
 import AirportCodeValidator from '../AirportCodeValidator';
 
 describe('validateData', () => {
+  // const errorMsg = /\*?is not a valid area code/
+
   it('should throw error if data contains a non string', () => {
-    const errorMsg = /[*]?is not a valid area code/
     const data = ['AAA', 123, 'ABC']
-    validateData(AirportCodeValidator, (data as string[]))
-  })
-})
+    const theTest = () => validateData(AirportCodeValidator, data as any);
+
+    expect(theTest.toThrow());
+  });
+});
