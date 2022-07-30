@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "repo for testing data structure algorithms",
   "main": "index.js",
+  "module": "CommonJS",
   "scripts": {
     "test": "jest",
     "start": "node index.ts",
