@@ -8,8 +8,9 @@ type AirportCode = string;
 export const validateData = (Validator: typeof AirportCodeValidator, data: string[]): void => {
   const v = new Validator;
 
-  const found = (data.find((s: string) => !v.isAcceptable(s)));
-  if (found) throw new Error(String(found) + ' is not a valid area code');
+  airportCodes.forEach((code, i) => {
+    if (!v.isAcceptable(code)) throw new Error(String(i) +  String(code) + ' is not a valid area code');
+  });
   console.log('All codes valid');
 };
 
