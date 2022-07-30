@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "repo for testing data structure algorithms",
   "main": "index.ts",
-  "module": "CommonJS",
   "scripts": {
     "test": "jest --watch",
     "start": "npx ts-node ./src",
-    "dev": "npx tsc --watch"
+    "dev": "rm -rf ./dist && npx tsc --watch"
   },
   "repository": {
     "type": "git",
