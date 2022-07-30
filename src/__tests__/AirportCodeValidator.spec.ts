@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import AirportCodeValidator from '../AirportCodeValidator';
-import { validateData } from "src/graph-search";
+import { validateData } from 'src/graph-search';
 
 describe('validateData', () => {
   // const errorMsg = /\*?is not a valid area code/

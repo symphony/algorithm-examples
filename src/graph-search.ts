@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import AirportCodeValidator from './AirportCodeValidator';
-import airportCodes from '../fixtures/airport-codes.json';
+import airportCodes from '../data/airport-codes.json';
 
 // types
 type AirportCode = string;
@@ -8,10 +8,10 @@ type AirportCode = string;
 export const validateData = (Validator: typeof AirportCodeValidator, data: string[]): void => {
   const v = new Validator;
 
-  airportCodes.forEach((code, i) => {
-    if (!v.isAcceptable(code)) throw new Error(String(i) +  String(code) + ' is not a valid area code');
+  data.forEach((code, i) => {
+    if (!v.isAcceptable(code)) throw new Error(String(i) + String(code) + ' is not a valid area code');
   });
-  console.log('All codes valid');
+  console.log('- All codes valid -');
 };
 
 
