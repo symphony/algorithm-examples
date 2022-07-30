@@ -7,7 +7,7 @@ describe('validateData', () => {
 
   it('should validate all strings in an array', () => {
     const data = ['AAA', 'BBB', 'CCC'];
-    const logSpy = jest.spyOn('console', 'log');
+    const logSpy = jest.spyOn(console, 'log');
 
     validateData(AirportCodeValidator, data)
     expect(logSpy).toBeCalledWith('- All codes valid -');
