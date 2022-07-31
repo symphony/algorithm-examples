@@ -34,32 +34,45 @@ export class Graph {
 
   // bfs search
   breadthSearch = (start: Node, item: Node) => {
+    if (!start || !item) return [];
+
     const visited = new Set();
     const queue = [start];
+    const foundRoutes = [];
+    const currentRoute = [start];
 
     while (queue.length > 0) {
       const current = queue.shift();
-      const connections = this.adjacencyList.get(current) ?? [];
+      const connections = this.adjacencyList.get(current);
+      // @ts-expect-error /* this error shouldn't be possible */
+      currentRoute.push(current);
+
       for (const node of connections) {
-        if (node === item) console.log('Found it');
+        currentRoute.push(node)
+
+        if (node === item) {
+          // save and reset current route
+          foundRoutes.push([...currentRoute]);
+          currentRoute.splice(2);
+        }
 
         if (!visited.has(node)) {
           visited.add(node);
           queue.push(node);
-          console.log(node);
         }
       }
 
+      currentRoute.splice(1);
     }
 
-    return false;
+    return foundRoutes;
   };
 };
 
 export class AirportGraph extends Graph { };
 
 // functions
-export const searchGraph = (graph: Graph, start: Node, item: string): boolean => {
+export const searchGraph = (graph: Graph, start: Node, item: string) => {
   validateData(AirportCodeValidator, graph.nodes);
   return graph.breadthSearch(start, item);
 };

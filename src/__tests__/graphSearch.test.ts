@@ -29,8 +29,6 @@ describe('AirportGraph', () => {
   it('should build a map', () => {
     const data = ['YVR', 'NRT', 'BOB'];
     const graph = new AirportGraph(data, [['YVR', 'NRT']]);
-
-    console.log('Graph:', graph.adjacencyList);
   });
 
   it('should create routes', () => {
@@ -60,24 +58,24 @@ describe('searchGraph', () => {
     expect(() => { searchGraph(new AirportGraph(['Hey'], []), 'start', 'item') }).toThrow();
     expect(() => { searchGraph(new AirportGraph(['HELLO'], []), 'start', 'item') }).toThrow();
     // @ts-expect-error
-    expect(() => { searchGraph(new AirportGraph(['YES'], undefined), 'start', 'item') }).toThrow();
+    expect(() => { searchGraph(new AirportGraph(['YES'], ), 'start', 'item') }).toThrow();
   });
 
   it('should handle empty arrays', () => {
     // @ts-expect-error
-    expect(() => { searchGraph(new AirportGraph([], []), undefined, undefined) }).not.toThrow();
+    expect(() => { searchGraph(new AirportGraph([], []), undefined, undefined ) }).not.toThrow();
   });
 
   it('should find the item in the graph', () => {
     const graph = new AirportGraph(airports, routes);
 
-    expect(searchGraph(graph, 'PHX', 'BKK')).toBe(true);
+    expect(searchGraph(graph, 'PHX', 'BKK')).toStrictEqual([['PHX', 'MEX', 'LAX', 'BKK'], ['PHX', 'LIM', 'MEX', 'BKK']]);
   });
 
-  it('should return false if item is not found', () => {
+  it('should return empty array if item is not found', () => {
     const graph = new AirportGraph(airports, routes);
 
-    expect(searchGraph(graph, 'PHX', 'DOG')).toBe(false);
+    expect(searchGraph(graph, 'PHX', 'DOG')).toStrictEqual([]);
   });
 
   // todo: complexity tests
