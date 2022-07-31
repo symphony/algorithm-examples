@@ -1,20 +1,15 @@
-// import _ from 'lodash';
-import AirportCodeValidator from '../helpers/AirportCodeValidator';
-import { validateData } from '../graph-search';
+import { AirportCodeValidator, validateData } from '../helpers/AirportCodeValidator';
 
 describe('validateData', () => {
   //   // const errorMsg = /\*?is not a valid area code/
 
   it('shall pass', () => {
-    console.log(validateData);
+    expect(typeof validateData).toBe('function');
   });
 
   it('should validate all strings in an array', () => {
     const data = ['AAA', 'BBB', 'CCC'];
-    const logSpy = jest.spyOn(console, 'log');
-
-    validateData(AirportCodeValidator, data)
-    expect(logSpy).toBeCalledWith('- All codes valid -');
+    expect(validateData(AirportCodeValidator, data)).toBe(true);
   });
 
   it('should throw error if data contains a non string', () => {
