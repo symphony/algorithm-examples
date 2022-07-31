@@ -1,18 +1,20 @@
-const numberRegexp = /^[A-Z]+$/;
-
-/** = checks for all caps and length of 3 characters =  */
-export class AirportCodeValidator {
-  isAcceptable(s: string): boolean {
-    return s.length === 3 && numberRegexp.test(s);
-  }
-};
-
+// = functions =
 export const validateData = (Validator: typeof AirportCodeValidator, data: string[]): boolean => {
   const v = new Validator;
 
-  data.forEach((code, i) => {
-    if (!v.isAcceptable(code)) throw new Error(String(i) + String(code) + ' is not a valid area code');
+  data.forEach((string, i) => {
+    if (!v.isAcceptable(string)) throw new Error(`"${String(string)}" at index [${String(i)}] is not a valid area code`);
   });
 
   return true;
+};
+
+// = classes =
+/** checks for all caps and length of 3 characters  */
+export class AirportCodeValidator {
+  capsRegExp: RegExp = /^[A-Z]+$/;
+
+  isAcceptable(s: string): boolean {
+    return s.length === 3 && this.capsRegExp.test(s);
+  }
 };
