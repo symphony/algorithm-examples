@@ -2,9 +2,10 @@ import _ from 'lodash';
 import { AirportCodeValidator, validateData } from './helpers/AirportCodeValidator';
 
 // types
-export type Node = string;
-export type Edge = [Node, Node];
+type Node = string;
+type Edge = [Node, Node];
 
+// classes
 export class Graph {
   public adjacencyList;
   public nodes;
@@ -34,8 +35,13 @@ export class Graph {
 
 export class AirportGraph extends Graph { };
 
-export const searchGraph = (graph: Graph, item: string): boolean => {
+// functions
+export const getRoutes = (graph: Graph, item: string): boolean => {
   validateData(AirportCodeValidator, graph.nodes);
 
+  return graph.adjacencyList.get(item);
+};
+
+export const searchGraph = (graph: Graph, item: string): boolean => {
   return graph.adjacencyList.get(item);
 };
