@@ -32,9 +32,9 @@ export class Graph {
     this.adjacencyList.get(destination).push(origin);
   };
 
-  // bfs search
+  // bfs
   breadthSearch = (start: Node, item: Node) => {
-    if (!start || !item) return [];
+    if (!start || !item) throw new Error('Missing parameters');
 
     const visited = new Set();
     const queue = [start];
@@ -43,7 +43,7 @@ export class Graph {
 
     while (queue.length > 0) {
       const current = queue.shift();
-      const connections = this.adjacencyList.get(current);
+      const connections = this.adjacencyList.get(current) ?? [];
       // @ts-expect-error /* this error shouldn't be possible */
       currentRoute.push(current);
 
@@ -65,7 +65,28 @@ export class Graph {
       currentRoute.splice(1);
     }
 
-    return foundRoutes;
+    return foundRoutes.length ? foundRoutes : null;
+  };
+
+  // dfs
+  depthSearch = (start: Node, item: Node, visited = new Set()): Node[] | null => {
+    if (!start || !item) throw new Error('Missing parameters');
+
+    const route = [start];
+    if (start === item) return route;
+
+    if (visited.has(start)) return null;
+    visited.add(start)
+
+    const connections = this.adjacencyList.get(start);
+
+    for (const node of connections) {
+      const found = this.depthSearch(node, item);
+      if (found) return route.concat(found)
+    }
+
+    console.log('found this?', route);
+    return null;
   };
 };
 
@@ -74,5 +95,6 @@ export class AirportGraph extends Graph { };
 // functions
 export const searchGraph = (graph: Graph, start: Node, item: string) => {
   validateData(AirportCodeValidator, graph.nodes);
+  return graph.depthSearch(start, item);
   return graph.breadthSearch(start, item);
 };

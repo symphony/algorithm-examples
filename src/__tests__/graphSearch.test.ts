@@ -27,8 +27,10 @@ describe('AirportGraph', () => {
   });
 
   it('should build a map', () => {
-    const data = ['YVR', 'NRT', 'BOB'];
+    const data = ['YVR', 'NRT'];
     const graph = new AirportGraph(data, [['YVR', 'NRT']]);
+
+    expect(typeof graph.adjacencyList).toBe('object')
   });
 
   it('should create routes', () => {
@@ -58,25 +60,53 @@ describe('searchGraph', () => {
     expect(() => { searchGraph(new AirportGraph(['Hey'], []), 'start', 'item') }).toThrow();
     expect(() => { searchGraph(new AirportGraph(['HELLO'], []), 'start', 'item') }).toThrow();
     // @ts-expect-error
-    expect(() => { searchGraph(new AirportGraph(['YES'], ), 'start', 'item') }).toThrow();
-  });
-
-  it('should handle empty arrays', () => {
-    // @ts-expect-error
-    expect(() => { searchGraph(new AirportGraph([], []), undefined, undefined ) }).not.toThrow();
-  });
-
-  it('should find the item in the graph', () => {
-    const graph = new AirportGraph(airports, routes);
-
-    expect(searchGraph(graph, 'PHX', 'BKK')).toStrictEqual([['PHX', 'MEX', 'LAX', 'BKK'], ['PHX', 'LIM', 'MEX', 'BKK']]);
-  });
-
-  it('should return empty array if item is not found', () => {
-    const graph = new AirportGraph(airports, routes);
-
-    expect(searchGraph(graph, 'PHX', 'DOG')).toStrictEqual([]);
+    expect(() => { searchGraph(new AirportGraph(['YES'],), 'start', 'item') }).toThrow();
   });
 
   // todo: complexity tests
+});
+
+describe('breadth first search', () => {
+  const graph = new AirportGraph(airports, routes);
+  it('should raise error if missing parameters', () => {
+    // @ts-expect-error
+    expect(() => { new AirportGraph([], []).breadthSearch(undefined, undefined) }).toThrow();
+  });
+
+  it('should find all routes that lead to the item', () => {
+    expect(graph.breadthSearch('PHX', 'BKK')).toStrictEqual([['PHX', 'MEX', 'LAX', 'BKK'], ['PHX', 'LIM', 'MEX', 'BKK']]);
+  });
+
+  it('should return null if item is not found', () => {
+    expect(graph.breadthSearch('PHX', 'DOG')).toBeNull();
+  });
+
+  it('should return null if item is not found', () => {
+    expect(graph.breadthSearch('DOG', 'BKK')).toBeNull();
+  });
+});
+
+describe('depth first search', () => {
+  const graph = new AirportGraph(airports, routes);
+
+  it('should raise error if missing parameters', () => {
+    // @ts-expect-error
+    expect(() => { new AirportGraph([], []).depthSearch(undefined, undefined) }).toThrow();
+  });
+
+  it('should find a routes that leads to the item', () => {
+    expect(graph.depthSearch('PHX', 'BKK')).toStrictEqual(['PHX', 'MEX', 'LAX', 'BKK']);
+  });
+
+  it('should be able to find itself', () => {
+    expect(graph.depthSearch('PHX', 'PHX')).toStrictEqual(['PHX']);
+  });
+
+  it('should return null if item is not found', () => {
+    expect(graph.depthSearch('DOG', 'PHX')).toBeNull();
+  });
+
+  it('should return null if item is not found', () => {
+    expect(graph.depthSearch('PHX', 'DOG')).toBeNull();
+  });
 });
