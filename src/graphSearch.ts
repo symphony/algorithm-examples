@@ -12,10 +12,9 @@ export class Graph {
 
   constructor(nodes: string[]) {
     this.adjacencyList = new Map();
-    this.nodes = nodes
-
-    this.nodes.forEach(this.addNode)
-  }
+    this.nodes = nodes;
+    this.nodes.forEach(this.addNode);
+  };
 
   // add node
   addNode = (node: string) => {
@@ -34,6 +33,6 @@ export class AirportGraph extends Graph { };
 export const searchGraph = (graph: Graph, item: string): boolean => {
   validateData(AirportCodeValidator, graph.nodes);
 
-  console.log(graph.adjacencyList);
-  return graph.adjacencyList.get(item); // test return
+  console.log(graph.adjacencyList); // testing
+  return graph.adjacencyList.get(item); // testing return
 };
