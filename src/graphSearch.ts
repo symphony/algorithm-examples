@@ -4,17 +4,36 @@ import airportCodes from './data/airport-codes.json';
 
 // types
 type AirportCode = string;
+type AirportCodes = AirportCode[];
 
-export const searchGraph = (graph: object): boolean => {
-  // the graph
-  const adjacencyList = new Map();
-  return graph ? true : false;
+export class Graph {
+  public adjacencyList;
+  public nodes;
+
+  constructor(nodes: string[]) {
+    this.adjacencyList = new Map();
+    this.nodes = nodes
+
+    this.nodes.forEach(this.addNode)
+  }
+
+  // add node
+  addNode = (node: string) => {
+    this.adjacencyList.set(node, []);
+  };
+
+  // add edge, undirected
+  addEdge = (origin: string, destination: string) => {
+    this.adjacencyList.get(origin).push(destination);
+    this.adjacencyList.get(destination).push(origin);
+  };
 };
 
-// = test runner =
-// test input data
-validateData(AirportCodeValidator, airportCodes);
+export class AirportGraph extends Graph { };
 
-// data valid, continue search
-const airports: AirportCode[] = airportCodes;
-searchGraph(airports)
+export const searchGraph = (graph: Graph, item: string): boolean => {
+  validateData(AirportCodeValidator, graph.nodes);
+
+  console.log(graph.adjacencyList);
+  return graph.adjacencyList.get(item); // test return
+};
