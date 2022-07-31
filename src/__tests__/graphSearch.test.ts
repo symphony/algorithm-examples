@@ -77,7 +77,7 @@ describe('breadth first search', () => {
     expect(graph.breadthSearch('PHX', 'BKK')).toStrictEqual([['PHX', 'MEX', 'LAX', 'BKK'], ['PHX', 'LIM', 'MEX', 'BKK']]);
   });
 
-  it('should return null if item is not found', () => {
+  it('should return null if start is not found in graph', () => {
     expect(graph.breadthSearch('PHX', 'DOG')).toBeNull();
   });
 
@@ -102,7 +102,7 @@ describe('depth first search', () => {
     expect(graph.depthSearch('PHX', 'PHX')).toStrictEqual(['PHX']);
   });
 
-  it('should return null if item is not found', () => {
+  it('should return null if start is not found in graph', () => {
     expect(graph.depthSearch('DOG', 'PHX')).toBeNull();
   });
 
