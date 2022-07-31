@@ -1,4 +1,4 @@
-import { AirportGraph, searchGraph, getRoutes, } from '../graphSearch';
+import { AirportGraph, searchGraph, } from '../graphSearch';
 
 // = Fixtures =
 const airports = ['PHX', 'BKK', 'OKC', 'JFK', 'LAX', 'MEX', 'EZE', 'HEL', 'LOS', 'LAP', 'LIM',];
@@ -32,49 +32,52 @@ describe('AirportGraph', () => {
 
     console.log('Graph:', graph.adjacencyList);
   });
-});
 
-// = Functions =
-describe('getRoutes', () => {
-  it('shall pass', () => {
-    expect(typeof getRoutes).toBe('function');
-  });
+  it('should create routes', () => {
+    const graph = new AirportGraph(airports, routes);
 
-  it('should have error handling', () => {
-    expect(() => { getRoutes(new AirportGraph(['NT'], []), 'any') }).toThrow();
-    expect(() => { getRoutes(new AirportGraph(['123'], []), 'any') }).toThrow();
-    expect(() => { getRoutes(new AirportGraph(['Hey'], []), 'any') }).toThrow();
-    expect(() => { getRoutes(new AirportGraph(['HELLO'], []), 'any') }).toThrow();
-    // @ts-expect-error
-    expect(() => { getRoutes(new AirportGraph(['YES'], undefined), 'any') }).toThrow();
-    // @ts-expect-error
-    expect(() => { getRoutes(new AirportGraph([], []), undefined) }).not.toThrow(); // should throw?
+    expect(graph.adjacencyList.get('BKK'));
   });
 
   it('should retrieve the correct routes', () => {
     const data = ['YVR', 'NRT', 'BOB'];
     const graph = new AirportGraph(data, [['YVR', 'NRT']]);
 
-    expect(getRoutes(graph, 'YVR')).toContain('NRT');
-    expect(getRoutes(graph, 'BOB')).toHaveLength(0);
-  });
-
-  it('should find the item in the routes', () => {
-    const graph = new AirportGraph(airports, routes);
-
-    expect(getRoutes(graph, 'BKK'));
+    expect(graph.adjacencyList.get('YVR')).toContain('NRT');
+    expect(graph.adjacencyList.get('BOB')).toHaveLength(0);
   });
 });
 
+// = Functions =
 describe('searchGraph', () => {
   it('shall pass', () => {
     expect(typeof searchGraph).toBe('function');
   });
 
+  it('should have error handling', () => {
+    expect(() => { searchGraph(new AirportGraph(['NT'], []), 'start', 'item') }).toThrow();
+    expect(() => { searchGraph(new AirportGraph(['123'], []), 'start', 'item') }).toThrow();
+    expect(() => { searchGraph(new AirportGraph(['Hey'], []), 'start', 'item') }).toThrow();
+    expect(() => { searchGraph(new AirportGraph(['HELLO'], []), 'start', 'item') }).toThrow();
+    // @ts-expect-error
+    expect(() => { searchGraph(new AirportGraph(['YES'], undefined), 'start', 'item') }).toThrow();
+  });
+
+  it('should handle empty arrays', () => {
+    // @ts-expect-error
+    expect(() => { searchGraph(new AirportGraph([], []), undefined, undefined) }).not.toThrow();
+  });
+
   it('should find the item in the graph', () => {
     const graph = new AirportGraph(airports, routes);
 
-    expect(searchGraph(graph, 'BKK'));
+    expect(searchGraph(graph, 'PHX', 'BKK')).toBe(true);
+  });
+
+  it('should return false if item is not found', () => {
+    const graph = new AirportGraph(airports, routes);
+
+    expect(searchGraph(graph, 'PHX', 'DOG')).toBe(false);
   });
 
   // todo: complexity tests

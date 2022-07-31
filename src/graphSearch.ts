@@ -31,17 +31,35 @@ export class Graph {
     this.adjacencyList.get(origin).push(destination);
     this.adjacencyList.get(destination).push(origin);
   };
+
+  // bfs search
+  breadthSearch = (start: Node, item: Node) => {
+    const visited = new Set();
+    const queue = [start];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      const connections = this.adjacencyList.get(current) ?? [];
+      for (const node of connections) {
+        if (node === item) console.log('Found it');
+
+        if (!visited.has(node)) {
+          visited.add(node);
+          queue.push(node);
+          console.log(node);
+        }
+      }
+
+    }
+
+    return false;
+  };
 };
 
 export class AirportGraph extends Graph { };
 
 // functions
-export const getRoutes = (graph: Graph, item: string): boolean => {
+export const searchGraph = (graph: Graph, start: Node, item: string): boolean => {
   validateData(AirportCodeValidator, graph.nodes);
-
-  return graph.adjacencyList.get(item);
-};
-
-export const searchGraph = (graph: Graph, item: string): boolean => {
-  return graph.adjacencyList.get(item);
+  return graph.breadthSearch(start, item);
 };
