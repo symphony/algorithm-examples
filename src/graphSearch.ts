@@ -71,18 +71,14 @@ export class Graph {
   // dfs
   depthSearch = (start: Node, item: Node, visited = new Set()): Node[] | null => {
     if (!start || !item) throw new Error('Missing parameters');
-    visited.add(start)
 
     const route = [start];
     if (start === item) return route;
-
+    visited.add(start)
 
     const connections = this.adjacencyList.get(start) ?? [];
-
     for (const node of connections) {
       if (visited.has(node)) continue;
-      if (node === item) return route.concat(node)
-
       const found = this.depthSearch(node, item, visited);
       if (found) return route.concat(found)
     }
