@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import AirportCodeValidator from './AirportCodeValidator';
-import airportCodes from '../data/airport-codes.json';
+import AirportCodeValidator from './helpers/AirportCodeValidator';
+import airportCodes from './data/airport-codes.json';
 
 // types
 type AirportCode = string;
