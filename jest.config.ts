@@ -3,14 +3,21 @@
  * https://jestjs.io/docs/configuration
  */
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
+
+  // The root directory that Jest should scan for tests and modules within
+  rootDir: "./src",
+
+  // Indicates whether each individual test should be reported during the run
+  verbose: true,
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
   // Stop running tests after `n` failures
-  // bail: 0,
+  // bail: 2,
 
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/tmp/jest_rs",
@@ -122,9 +129,6 @@ module.exports = {
   // Automatically restore mock state and implementation before every test
   // restoreMocks: false,
 
-  // The root directory that Jest should scan for tests and modules within
-  rootDir: "./src",
-
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
   //   "./src"
@@ -185,9 +189,6 @@ module.exports = {
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
-
-  // Indicates whether each individual test should be reported during the run
-  // verbose: undefined,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],

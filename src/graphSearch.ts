@@ -5,17 +5,16 @@ import airportCodes from './data/airport-codes.json';
 // types
 type AirportCode = string;
 
-// validation
-
-
 export const searchGraph = (graph: object): boolean => {
   // the graph
   const adjacencyList = new Map();
   return graph ? true : false;
 };
 
-// test runner
+// = test runner =
+// test input data
 validateData(AirportCodeValidator, airportCodes);
 
+// data valid, continue search
 const airports: AirportCode[] = airportCodes;
 searchGraph(airports)

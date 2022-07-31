@@ -1,6 +1,6 @@
 import arrayContainsSum from '../sum';
 
-describe('validateData', () => {
+describe('arrayContainsSum', () => {
   it('shall pass', () => {
     expect(typeof arrayContainsSum).toBe('function');
   });
@@ -12,6 +12,8 @@ describe('validateData', () => {
   it('should return null if item is not found', () => {
     expect(arrayContainsSum([0, 2, 4, 7, 9, 10], 15)).toBe(false);
   });
+
+  // todo: complexity tests
 });
 
 
