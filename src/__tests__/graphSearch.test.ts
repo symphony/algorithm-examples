@@ -95,7 +95,7 @@ describe('depth first search', () => {
   });
 
   it('should find a routes that leads to the item', () => {
-    expect(graph.depthSearch('PHX', 'BKK')).toStrictEqual(['PHX', 'MEX', 'LAX', 'BKK']);
+    expect(graph.depthSearch('PHX', 'BKK')).toStrictEqual(['PHX', 'LAX', 'MEX', 'BKK']);
   });
 
   it('should be able to find itself', () => {
